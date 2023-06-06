@@ -6,13 +6,15 @@ const mongoose = require('mongoose');
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb+srv://harsh:harsh@harsh.zfo9aqa.mongodb.net/test');
+    await mongoose.connect('mongodb+srv://harsh:harsh@cluster0.fi8kqgv.mongodb.net/test');
     console.log('database is connected')
 }
 
 const userSchema = new mongoose.Schema({
     username: String,
-    password: String
+    phone: Number,
+    email: String,
+    message: String
 });
 
 const User = mongoose.model('User', userSchema);
@@ -27,7 +29,9 @@ server.use(bodyparser.json());
 server.post('/demo', async (req, res) => {
     let user = new User();
     user.username = req.body.username;
-    user.password = req.body.password;
+    user.phone = req.body.phone;
+    user.email = req.body.email;
+    user.message = req.body.message;
     const docs = await user.save();
 
     console.log(docs);
